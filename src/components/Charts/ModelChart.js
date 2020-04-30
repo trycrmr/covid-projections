@@ -42,11 +42,11 @@ const ModelChart = ({
   const lastUpdatedDate = useModelLastUpdatedDate();
 
   const data = [
-    projections.baseline.getDataset('hospitalizations'),
-    projections.distancingPoorEnforcement.now.getDataset('hospitalizations'),
-    projections.primary.getDataset('hospitalizations'),
-    projections.distancing.now.getDataset('hospitalizations'),
-    projections.baseline.getDataset('beds', 'Available hospital beds'),
+    projections.baseline.getDataset('icuHospitalizations'),
+    projections.distancingPoorEnforcement.now.getDataset('icuHospitalizations'),
+    projections.primary.getDataset('icuHospitalizations'),
+    projections.distancing.now.getDataset('icuHospitalizations'),
+    projections.baseline.getDataset('icuBeds', 'Available hospital beds'),
   ];
 
   const noAction = {

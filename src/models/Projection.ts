@@ -23,6 +23,8 @@ export interface ProjectionDataset {
 export type DatasetId =
   | 'hospitalizations'
   | 'beds'
+  | 'icuHospitalizations'
+  | ' icuBeds'
   | 'cumulativeDeaths'
   | 'cumulativeInfected'
   | 'rtRange'
@@ -58,6 +60,8 @@ export class Projection {
   // NOTE: These are used dynamically by getColumn()
   private readonly hospitalizations: number[];
   private readonly beds: number[];
+  private readonly icuHospitalizations: number[];
+  private readonly icuBeds: number[];
   private readonly cumulativeDeaths: number[];
   private readonly cumulativeInfected: number[];
   private readonly cumulativePositiveTests: Array<number | null>;
@@ -84,6 +88,8 @@ export class Projection {
     // Set up our series data exposed via getDataset().
     this.hospitalizations = timeseries.map(row => row.hospitalBedsRequired);
     this.beds = timeseries.map(row => row.hospitalBedCapacity);
+    this.icuHospitalizations = timeseries.map(row => row.ICUBedsInUse);
+    this.icuBeds = timeseries.map(row => row.ICUBedCapacity);
     this.cumulativeDeaths = timeseries.map(row => row.cumulativeDeaths);
     this.cumulativeInfected = timeseries.map(row => row.cumulativeInfected);
     this.cumulativePositiveTests = this.smoothCumulatives(
