@@ -78,7 +78,8 @@ const ChartFutureHospitalization = ({
 
   const allData: PointProjections[] = [
     ...getProjectionsPoints(dataProjectedFuture, COLORS.PROJECTED, false),
-    ...getProjectionsPoints(dataNoActionFuture, COLORS.LIMITED_ACTION, false),
+    // HACK: Remove / rework.
+    //...getProjectionsPoints(dataNoActionFuture, COLORS.LIMITED_ACTION, false),
     ...getProjectionsPoints(
       dataProjectedPast,
       theme.palette.chart.foreground,

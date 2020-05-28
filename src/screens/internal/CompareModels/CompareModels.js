@@ -109,9 +109,16 @@ function CompareModelsMain({ masterSnapshot, location }) {
 
   function getSeriesDiffForState(stateAbbr) {
     const getDataset = projection => {
-      return metric === Metric.HOSPITAL_USAGE
-        ? projection.getDataset('icuUtilization')
-        : projection.getDataset('rtRange').map(d => ({ x: d.x, y: d.y?.rt }));
+      switch (metric) {
+        case Metric.HOSPITAL_USAGE:
+          return projection.getDataset('icuUtilization');
+        case Metric.CASE_GROWTH_RATE:
+          return projection
+            .getDataset('rtRange')
+            .map(d => ({ x: d.x, y: d.y?.rt }));
+        case Metric.FUTURE_PROJECTIONS:
+          return projection.getDataset('hospitalizations');
+      }
     };
 
     const leftDataset = getDataset(leftStateProjections[stateAbbr].primary);
@@ -181,9 +188,14 @@ function CompareModelsMain({ masterSnapshot, location }) {
 
   function getMetricDiffForState(stateAbbr) {
     const getMetric = projection => {
-      return metric === Metric.HOSPITAL_USAGE
-        ? projection.currentIcuUtilization
-        : projection.rt;
+      switch (metric) {
+        case Metric.CASE_GROWTH_RATE:
+          return projection.rt;
+        case Metric.HOSPITAL_USAGE:
+          return projection.currentIcuUtilization;
+        case Metric.FUTURE_PROJECTIONS:
+          return projection.finalCumulativeDeaths;
+      }
     };
 
     const left = getMetric(leftStateProjections[stateAbbr].primary);
@@ -266,8 +278,12 @@ function CompareModelsMain({ masterSnapshot, location }) {
         <FormControl style={{ width: '12rem', marginLeft: '1rem' }}>
           <InputLabel focused={false}>Metric:</InputLabel>
           <Select value={metric} onChange={changeMetric}>
-            {/* TODO(michael): Add test positive rate (and projections?) */}
-            {[Metric.CASE_GROWTH_RATE, Metric.HOSPITAL_USAGE].map(metric => (
+            {/* TODO(michael): Add test positive rate and contact tracing */}
+            {[
+              Metric.CASE_GROWTH_RATE,
+              Metric.HOSPITAL_USAGE,
+              Metric.FUTURE_PROJECTIONS,
+            ].map(metric => (
               <MenuItem key={metric} value={metric}>
                 {getMetricName(metric)}
               </MenuItem>
