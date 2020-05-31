@@ -3,6 +3,7 @@ import { Level, LevelInfoMap } from 'common/level';
 
 const LOW_NAME = 'Low';
 const MEDIUM_NAME = 'Moderate';
+const MEDIUM_HIGH_NAME = 'Moderate High';
 const HIGH_NAME = 'Elevated';
 const UNKNOWN = 'Unknown';
 
@@ -23,13 +24,21 @@ export const LOCATION_SUMMARY_LEVELS: LevelInfoMap = {
     detail: locationName =>
       `${locationName}’s COVID risk is moderate because at least one of ${locationName}’s  COVID metrics do not meet international standards.`,
   },
+  [Level.MEDIUM_HIGH]: {
+    level: Level.MEDIUM_HIGH,
+    upperLimit: 0,
+    name: MEDIUM_HIGH_NAME,
+    color: COLOR_MAP.ORANGE_DARK.BASE,
+    detail: locationName =>
+      `${locationName}’s COVID risk is elevated because at least one of ${locationName}’s COVID metrics is substantially below international standards.`,
+  },
   [Level.HIGH]: {
     level: Level.HIGH,
     upperLimit: 0,
     name: HIGH_NAME,
     color: COLOR_MAP.RED.BASE,
     detail: locationName =>
-      `${locationName}’s COVID risk is elevated because at least one of ${locationName}’s COVID metrics is substantially below international standards.`,
+      `${locationName}’s COVID risk is elevated because at least one of ${locationName}’s COVID metrics is critically below international standards.`,
   },
   [Level.UNKNOWN]: {
     level: Level.UNKNOWN,

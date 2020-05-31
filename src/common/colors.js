@@ -18,6 +18,9 @@ export const COLOR_MAP = {
     LIGHT: '#FFC020',
     DARK: '#933500',
   },
+  ORANGE_DARK: {
+    BASE: '#FF6D00', // Material UI orange A700
+  },
   RED: {
     BASE: '#F03147',
     LIGHT: '#FC818F',
@@ -41,6 +44,7 @@ export const COLOR_MAP = {
 export const LEVEL_COLOR = {
   [Level.LOW]: COLOR_MAP.GREEN.BASE,
   [Level.MEDIUM]: COLOR_MAP.ORANGE.BASE,
+  [Level.MEDIUM_HIGH]: COLOR_MAP.ORANGE_DARK.BASE,
   [Level.HIGH]: COLOR_MAP.RED.BASE,
   [Level.UNKNOWN]: COLOR_MAP.GRAY.BASE,
 };

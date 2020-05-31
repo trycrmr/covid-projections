@@ -9,16 +9,19 @@ export const METRIC_NAME = 'Infection rate';
 
 const SHORT_DESCRIPTION_LOW = 'Active cases are decreasing';
 const SHORT_DESCRIPTION_MEDIUM = 'Active cases are slowly increasing';
-const SHORT_DESCRIPTION_HIGH = 'Active cases are increasing';
+const SHORT_DESCRIPTION_MEDIUM_HIGH = 'Active cases are increasing rapidly';
+const SHORT_DESCRIPTION_HIGH = 'Active cases are increasing exponentially';
 const SHORT_DESCRIPTION_UNKNOWN = 'Insufficient data to assess';
 
 const LIMIT_LOW = 1;
-const LIMIT_MEDIUM = 1.2;
+const LIMIT_MEDIUM = 1.1;
+const LIMIT_MEDIUM_HIGH = 1.3;
 const LIMIT_HIGH = Infinity;
 
 const LOW_NAME = 'Low';
 const MEDIUM_NAME = 'Medium';
-const HIGH_NAME = 'High';
+const MEDIUM_HIGH_NAME = 'High';
+const HIGH_NAME = 'Critical';
 const UNKNOWN = 'Unknown';
 
 export const CASE_GROWTH_RATE_LEVEL_INFO_MAP: LevelInfoMap = {
@@ -35,6 +38,13 @@ export const CASE_GROWTH_RATE_LEVEL_INFO_MAP: LevelInfoMap = {
     name: MEDIUM_NAME,
     color: COLOR_MAP.ORANGE.BASE,
     detail: () => SHORT_DESCRIPTION_MEDIUM,
+  },
+  [Level.MEDIUM_HIGH]: {
+    level: Level.MEDIUM_HIGH,
+    upperLimit: LIMIT_MEDIUM_HIGH,
+    name: MEDIUM_HIGH_NAME,
+    color: COLOR_MAP.ORANGE_DARK.BASE,
+    detail: () => SHORT_DESCRIPTION_MEDIUM_HIGH,
   },
   [Level.HIGH]: {
     level: Level.HIGH,
@@ -68,7 +78,8 @@ export function caseGrowthStatusText(projection: Projection) {
     level,
     `Because each person is infecting less than one other person, the total number of current cases in ${projection.locationName} is shrinking.`,
     `Because this number is only slightly above 1.0, it means that COVID is growing, but slowly.`,
-    `As such, the total number of current cases in ${projection.locationName} is growing exponentially.`,
+    `As such, the total number of current cases in ${projection.locationName} is growing at a rate that may be unsustainable.`,
+    `As such, the total number of cases in ${projection.locationName} is growing exponentially. Strong action needed.`,
   );
 
   return `${infectionRate} ${epidemiologyReasoning}`;

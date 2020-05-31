@@ -10,16 +10,20 @@ export const STATES_WITH_DATA_OVERRIDES = ['Nevada'];
 
 const SHORT_DESCRIPTION_LOW = 'Can likely handle a new wave of COVID';
 const SHORT_DESCRIPTION_MEDIUM = 'At risk to a new wave of COVID';
+const SHORT_DESCRIPTION_MEDIUM_HIGH =
+  'Likely unable to handle a new wave of COVID';
 const SHORT_DESCRIPTION_HIGH = 'Unable to handle a new wave of COVID';
 const SHORT_DESCRIPTION_UNKNOWN = 'Insufficient data to assess';
 
-const LIMIT_LOW = 0.5;
-const LIMIT_MEDIUM = 0.7;
+const LIMIT_LOW = 0.4;
+const LIMIT_MEDIUM = 0.6;
+const LIMIT_MEDIUM_HIGH = 0.8;
 const LIMIT_HIGH = Infinity;
 
 const LOW_NAME = 'Low';
 const MEDIUM_NAME = 'Medium';
-const HIGH_NAME = 'High';
+const MEDIUM_HIGH_NAME = 'High';
+const HIGH_NAME = 'Critical';
 const UNKNOWN = 'Unknown';
 
 export const HOSPITAL_USAGE_LEVEL_INFO_MAP: LevelInfoMap = {
@@ -36,6 +40,13 @@ export const HOSPITAL_USAGE_LEVEL_INFO_MAP: LevelInfoMap = {
     name: MEDIUM_NAME,
     color: COLOR_MAP.ORANGE.BASE,
     detail: () => SHORT_DESCRIPTION_MEDIUM,
+  },
+  [Level.MEDIUM_HIGH]: {
+    level: Level.MEDIUM_HIGH,
+    upperLimit: LIMIT_MEDIUM_HIGH,
+    name: MEDIUM_HIGH_NAME,
+    color: COLOR_MAP.ORANGE_DARK.BASE,
+    detail: () => SHORT_DESCRIPTION_MEDIUM_HIGH,
   },
   [Level.HIGH]: {
     level: Level.HIGH,
@@ -73,29 +84,37 @@ export function hospitalOccupancyStatusText(projection: Projection) {
 
   const location = projection.locationName;
 
-  const lowText = `This suggests there is likely enough capacity to absorb a wave of new COVID infections.`;
-  const mediumText = `This suggests some ability to absorb an increase in COVID cases, but caution is warranted.`;
-  const highText = `This suggests the healthcare system is not well positioned  to absorb a wave of new COVID infections without substantial surge capacity.`;
-
   const noStateOverride =
     STATES_WITH_DATA_OVERRIDES.indexOf(projection.stateName) < 0 ||
     !projection.hasActualData;
 
-  return `${location} ${noStateOverride ? 'has about' : 'has'} ${formatInteger(
-    totalICUCapacity,
-  )} ICU beds.
-     ${noStateOverride ? 'We estimate that' : ''} ${formatPercent(
+  const totalICUBeds = formatInteger(totalICUCapacity);
+
+  const nonCovidUsedBeds = formatInteger(nonCovidPatients);
+  const nonCovidUsedBedsPercent = formatPercent(
     nonCovidPatients / totalICUCapacity,
-  )} (${formatInteger(nonCovidPatients)})
-        are currently occupied by non-COVID patients. Of the remaining ${formatInteger(
-          totalICUCapacity - nonCovidPatients,
-        )} ICU beds, ${noStateOverride ? 'we estimate ' : ''}
-        ${formatInteger(
-          currentCovidICUPatients,
-        )} are occupied by COVID cases, or ${formatPercent(
-    Math.min(
-      1,
-      currentCovidICUPatients / (totalICUCapacity - nonCovidPatients),
-    ),
-  )} of available beds. ${levelText(level, lowText, mediumText, highText)}`;
+  );
+  const remainingICUBeds = formatInteger(totalICUCapacity - nonCovidPatients);
+  const covidICUPatients = formatInteger(currentCovidICUPatients);
+  const covidICUBeds = Math.min(
+    1,
+    currentCovidICUPatients / (totalICUCapacity - nonCovidPatients),
+  );
+
+  const textHasAbout = noStateOverride ? 'has about' : 'has';
+  const textWeEstimateThat = noStateOverride ? 'We estimate that' : '';
+  const textWeEstimate = noStateOverride ? 'we estimate' : '';
+
+  const textLevel = levelText(
+    level,
+    'This suggests there is likely enough capacity to absorb a wave of new COVID infections.',
+    'This suggests some ability to absorb an increase in COVID cases, but caution is warranted.',
+    'This suggests the healthcare system is not well positioned  to absorb a wave of new COVID infections without substantial surge capacity.',
+    'This suggests the healthcare system is not well positioned  to absorb a wave of new COVID infections without substantial surge capacity.',
+  );
+
+  return `${location} ${textHasAbout} ${totalICUBeds} ICU beds.
+    ${textWeEstimateThat} ${nonCovidUsedBedsPercent} (${nonCovidUsedBeds}) are currently occupied by non-COVID patients. 
+    Of the remaining ${remainingICUBeds} ICU beds, ${textWeEstimate} ${covidICUPatients} are occupied by COVID cases, 
+    or ${formatPercent(covidICUBeds)} of available beds. ${textLevel}`;
 }

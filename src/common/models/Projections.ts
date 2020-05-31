@@ -125,6 +125,11 @@ export class Projections {
     ) {
       return Level.HIGH;
     } else if (
+      levelList.some(level => level === Level.MEDIUM_HIGH) ||
+      reverseList.some(level => level === Level.MEDIUM_HIGH)
+    ) {
+      return Level.MEDIUM_HIGH;
+    } else if (
       levelList.some(level => level === Level.MEDIUM) ||
       reverseList.some(level => level === Level.MEDIUM)
     ) {
