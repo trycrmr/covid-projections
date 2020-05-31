@@ -40,14 +40,14 @@ export const CONTACT_TRACING_LEVEL_INFO_MAP: LevelInfoMap = {
     level: Level.MEDIUM,
     upperLimit: LIMIT_MEDIUM,
     name: MEDIUM_NAME,
-    color: COLOR_MAP.ORANGE.BASE,
+    color: COLOR_MAP.ORANGE_DARK.BASE,
     detail: () => SHORT_DESCRIPTION_MEDIUM,
   },
   [Level.MEDIUM_HIGH]: {
     level: Level.MEDIUM_HIGH,
     upperLimit: LIMIT_MEDIUM_HIGH,
     name: MEDIUM_HIGH_NAME,
-    color: COLOR_MAP.ORANGE_DARK.BASE,
+    color: COLOR_MAP.ORANGE.BASE,
     detail: () => SHORT_DESCRIPTION_MEDIUM_HIGH,
   },
   [Level.HIGH]: {
