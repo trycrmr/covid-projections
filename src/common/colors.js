@@ -19,7 +19,7 @@ export const COLOR_MAP = {
     DARK: '#933500',
   },
   ORANGE_DARK: {
-    BASE: '#FF9600', // Material UI orange A700
+    BASE: '#FF9600',
   },
   RED: {
     BASE: '#FF0034',
