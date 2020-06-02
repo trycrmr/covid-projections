@@ -14,21 +14,21 @@ export default {
 
 export const COLOR_MAP = {
   ORANGE: {
-    BASE: '#FFAD16',
+    BASE: '#FFC900',
     LIGHT: '#FFC020',
     DARK: '#933500',
   },
   ORANGE_DARK: {
-    BASE: '#FF6D00', // Material UI orange A700
+    BASE: '#FF9600', // Material UI orange A700
   },
   RED: {
-    BASE: '#F03147',
+    BASE: '#FF0034',
     LIGHT: '#FC818F',
     DARK: '#82000E',
   },
   GREEN: {
     // Chosen to match "official" green from logo, etc.
-    BASE: 'rgb(0, 208, 125)',
+    BASE: '#00D474',
     // TODO: Remove GREEN.DARK? Per Josh Ziman we want to consolidate all
     // instances of green into one, as long as text readability is maintained.
     DARK: '#0A3D31',
