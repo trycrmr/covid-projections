@@ -114,9 +114,7 @@ export const RegionAnnotation = styled(TextAnnotation)<{ isActive: boolean }>`
     fill: ${props =>
       props.isActive ? props.color : palette(props).background};
     stroke: ${props =>
-      props.isActive || palette(props).isDarkMode
-        ? props.color
-        : props.theme.palette.lightGray};
+      props.isActive || palette(props).isDarkMode ? props.color : 'none'};
     stroke-width: 1px;
   }
   text {
