@@ -1,10 +1,11 @@
 import { COLOR_MAP } from 'common/colors';
 import { Level, LevelInfoMap } from 'common/level';
 
+// Note: These names are used on SocialLocationPreview
 const LOW_NAME = 'Low';
-const MEDIUM_NAME = 'Moderate';
-const MEDIUM_HIGH_NAME = 'Moderate High';
-const HIGH_NAME = 'Elevated';
+const MEDIUM_NAME = 'Medium';
+const MEDIUM_HIGH_NAME = 'High';
+const HIGH_NAME = 'Critical';
 const UNKNOWN = 'Unknown';
 
 export const LOCATION_SUMMARY_LEVELS: LevelInfoMap = {
