@@ -109,8 +109,8 @@ export function hospitalOccupancyStatusText(projection: Projection) {
     level,
     'This suggests there is likely enough capacity to absorb a wave of new COVID infections.',
     'This suggests some ability to absorb an increase in COVID cases, but caution is warranted.',
-    'This suggests the healthcare system is not well positioned  to absorb a wave of new COVID infections without substantial surge capacity.',
-    'This suggests the healthcare system is not well positioned  to absorb a wave of new COVID infections without substantial surge capacity.',
+    'This suggests the healthcare system is not well positioned to absorb a wave of new COVID infections without substantial surge capacity.',
+    'This suggests the healthcare system is not well positioned to absorb a wave of new COVID infections without substantial surge capacity.',
   );
 
   return `${location} ${textHasAbout} ${totalICUBeds} ICU beds.
